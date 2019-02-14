@@ -175,6 +175,7 @@ body {
 		z-index: 0;
 		width: 100%;
 		height: auto;
+		z-index: 0;
 		.fill-color {
 			fill: $top-background-color;
 		}
@@ -192,7 +193,8 @@ body {
 		color: $montse-logo-color;
 		white-space: nowrap;
 		font-size: calc(100vw / 6);
-
+		position: relative;
+		z-index: 10;
     }
 
     #natura_logo {
