@@ -73,55 +73,81 @@
 // font-family: 'Mr Dafoe', cursive;
 // font-family: 'Open Sans Condensed', sans-serif;
 
-$light-gray: hsl(0,0%,75%);
-$medium-gray: hsl(0,0%,50%);
-$dark-gray: hsl(0,0%,25%);
+$light-gray: 	hsl(0,0%,75%);
+$medium-gray: 	hsl(0,0%,50%);
+$dark-gray: 	hsl(0,0%,25%);
 
-$light-color: hsl(170,30%,75%);
-$medium-color: hsl(170,30%,50%);
-$dark-color: hsl(170,30%,25%);
+$light-color: 	hsl(170,30%,75%);
+$medium-color: 	hsl(170,30%,50%);
+$dark-color: 	hsl(170,30%,25%);
 
-$base-text-color: $medium-gray;
-$top-background-color: rgba($light-color, 0.25);
-$montse-logo-color: $dark-color;
-$natura-logo-color: $light-color;
-$product-circle-color: hsl(20,100%,75%);
-$product-title-color: $dark-gray;
-$next-background-color: rgba($light-color, 0.25);
-$next-text-color: $dark-gray;
-$montse-name-color: $dark-gray;
-$whatsapp-color: hsl(127,56%,56%);
+$base-text-color: 			$medium-gray;
+$top-background-color: 		rgba($light-color, 0.25);
+$montse-logo-color: 		$dark-color;
+$natura-logo-color: 		$light-color;
+$product-circle-color: 		hsl(90,50%,75%);
+$product-title-color: 		$dark-gray;
+$next-background-color: 	rgba($light-color, 0.25);
+$next-text-color: 			$dark-gray;
+$montse-name-color: 		$dark-gray;
+
+$whatsapp-color: 			hsl(127,56%,56%);
 
 
+$cart-background-color: $dark-color;
+$cart-text-color: white;
 
+$body-width: 400px;
 
+body {
+	position: relative;
+	font-family: 'Open Sans Condensed', sans-serif;
+	// max-width: $body-width;
+	margin: 0 auto;
+	background-color: $top-background-color;
+}
 
 .card {
-	font-family: 'Open Sans Condensed', sans-serif;
 	position: relative;
-	min-height: 100vh;
+	// min-height: 100vh;
+	min-height: auto;
 	margin-bottom: 0;
 	border-width: 0;
 	color: $base-text-color;
-
-	font-size: 10px;
+	font-size: 1em;
     @include breakpoint(400px) {
-		font-size: 13px;
+		font-size: 1.0625em;
     }
     @include breakpoint(500px) {
-		font-size: 16px;
+		font-size: 1.125em;
     }
+	&:first-of-type {
+		border-width: 0 0 1px 0;
+	}
 
 	& + .card {
-		// background: linear-gradient(#fafafa, #fff);	
-		border-width: 1px 0 0 0;
+		padding-top: 10vh;
+	    @include breakpoint(400px) {
+			padding-top: 20vh;
+	    }
+	    @include breakpoint(500px) {
+			padding-top: 30vh;
+	    }
 	}
 
 	&.contact {
 		color: $montse-name-color;
-		font-size: 1em;
-		// min-height: auto;
+		min-height: 100vh;
 		// padding: 2em 0;
+  		
+  		> .grid-x {
+			min-height: 100vh;
+    	}
+
+		> .grid-y.grid-frame {
+			min-height: auto;
+			padding: 0;
+		}
 
 		.name {
 			font-size: 2em;
@@ -129,11 +155,10 @@ $whatsapp-color: hsl(127,56%,56%);
 		}
 
 		a {
-			font-size: 1.5em;
 			color: inherit;
 		}
 
-		svg#WhatsAppLogo {
+		svg.WhatsAppLogo {
 		    display: inline;
 		    width: 1em;
 		    position: relative;
@@ -162,10 +187,12 @@ $whatsapp-color: hsl(127,56%,56%);
 	}
 
     .montse {
-		font-size: 4.5em;
 		padding-top: 2em;
 		font-family: 'Mr Dafoe', cursive;
 		color: $montse-logo-color;
+		white-space: nowrap;
+		font-size: calc(100vw / 6);
+
     }
 
     #natura_logo {
@@ -177,13 +204,15 @@ $whatsapp-color: hsl(127,56%,56%);
 
 	.image {
 		.circle {
-			height: 50vh;
-			width: 50vh;
-			border-radius: 1000px;			
+			max-height: calc(#{$body-width} - 2rem);
+			max-width: calc(#{$body-width} - 2rem);
+			border-radius: 1000px;
 			background-color: $product-circle-color; // random
-			// background: linear-gradient(#fff, #f3f3f3);	
 			padding: 1.5rem;
 			position: relative;
+			width: calc(100vw - 2rem);
+			height: calc(100vw - 2rem);
+			margin: 0 auto;
 		}
 		img {
 			position: absolute;
@@ -196,14 +225,125 @@ $whatsapp-color: hsl(127,56%,56%);
 	}
 	
 	.title {
-		padding: 1em 0 0.875em;
+		padding: 1em 0.5em 0.875em;
 		font-size: 3em;
 		line-height: 1;
 		color: $product-title-color;
 	}
-	
-	.details {
-		font-size: 1.8em;
+
+	.SendToWhatsApp.text-link {
+		font-size: 1.375em;
+	}
+
+	table {
+		margin-bottom: 0;
+		thead {
+			font-size: 0.875em;
+			th {
+				padding: 0.5rem 1rem;
+				text-align: center;
+			}
+		}
+		tbody {
+			tr {border-bottom: 1px solid lighten($light-gray, 20%);}
+			td {
+				padding: 0.5rem 1rem;
+				text-align: center;
+				.quantity-wrapper{
+					max-width: 22.6ch;
+					margin: 0 auto;
+					.for-input {
+						width: 100%;
+						text-align: center;
+						line-height: 0;
+						padding: 0.25em;
+						svg {
+							width: 1em;
+						}
+					}
+					.input-wrapper {
+						width: 100%;
+ 						text-align: center;
+						input {
+							display: block;
+							margin: 0 auto;
+							width: 10ch;
+							box-shadow: none;
+							text-align: center;
+						} 						
+					}			
+					@include breakpoint(285px) {
+						.for-input {
+							width: auto;
+							padding: 0 0.25em;
+							&[data-minus]{text-align: right;}
+							&[data-plus]{text-align: left;}
+						}
+						.input-wrapper {
+	 						width: 15ch;
+						}
+					}
+				}
+			}				
+		}
+		tfoot {
+			font-size: 1.3125em;
+			border-bottom: 0px;
+			td {
+				text-align: center;
+				background-color: $whatsapp-color; // brand green
+			}
+			tr:last-of-type > td:last-of-type {
+				padding-right: 1rem;
+				padding-left: 1rem;
+				background-color: $light-color;
+				color: black;
+				width: 9ch;
+			}
+			.SendToWhatsApp {
+				color: white;
+				svg.WhatsAppLogo {
+					display: inline;
+					width: 1em;
+					position: relative;
+					top: 0.125em;				
+				    fill: white; // brand green
+				}
+				span span {
+					display: none;
+					@include breakpoint(320px) {
+						display: inline;
+					}
+				}
+			}
+		}
+		&.cart:not(.has-products) {
+			opacity: 0;
+			transition: all 0.2s ease-in-out;
+		}		
+		&.checkout {
+			margin-bottom: 3.0625em;
+			tbody {
+				tr:last-of-type {
+					border-bottom: 0;
+				}
+				td {
+					// padding: 0.5rem 1em;
+				}
+			}
+		}
+		&.fixed.checkout {
+			position: fixed;
+			bottom: 0;
+			margin-bottom: 0;
+			width: 100%;
+		}
+		.product-name {
+			text-align: left;
+		}
+		.product-total {
+			text-align: right;
+		}
 	}
 
 	.spacer {
@@ -211,6 +351,7 @@ $whatsapp-color: hsl(127,56%,56%);
 	}
 
 	.next {
+		display: none;
 		position: absolute;
 		bottom: 0;
 		right: 0;
@@ -226,3 +367,20 @@ $whatsapp-color: hsl(127,56%,56%);
 
 }
 
+// .cart {
+// 	position: fixed;
+// 	bottom: 0;
+// 	z-index: 100;
+// 	width: 100%;
+// 	background-color: $cart-background-color;
+// 	color: $cart-text-color;
+// 	& > .cell {
+// 		line-height: 0;
+// 		font-size: 14px;
+// 		padding: 1.5rem;
+// 		&:last-of-type{
+// 			// color: $dark-color;
+// 			font-size: 20px;
+// 		}
+// 	}
+// }
