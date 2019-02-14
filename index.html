@@ -573,7 +573,7 @@
         <div class="spacer">&nbsp;</div>
         <span class="name">Montse Chang</span>
         <br>
-        <a class="SendToWhatsApp text-link" href="https://wa.me/19712706613?text=" target="new">
+        <a class="SendToWhatsApp text-link" href="https://wa.me/19712706613?text=Please%20contact%20me%20about%20your%20Natura%20products!" target="new">
           <svg version="1.1" class="WhatsAppLogo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 90 90" style="enable-background:new 0 0 90 90;" xml:space="preserve">
             <path d="M90,43.841c0,24.213-19.779,43.841-44.182,43.841c-7.747,0-15.025-1.98-21.357-5.455L0,90l7.975-23.522
               c-4.023-6.606-6.34-14.354-6.34-22.637C1.635,19.628,21.416,0,45.818,0C70.223,0,90,19.628,90,43.841z M45.818,6.982
@@ -612,7 +612,7 @@
         <tfoot>
             <tr>
                 <td>
-                    <a class="SendToWhatsApp" href="https://wa.me/19712706613?text=3%20Small%20Lotion%0a1%20Big%20Lotion%0a-----%0aTotal:%20$500" target="new">
+                    <a class="SendToWhatsApp" href="https://wa.me/19712706613?text=Please%20contact%20me%20about%20your%20Natura%20products!" target="new">
                       <svg version="1.1" class="WhatsAppLogo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 90 90" style="enable-background:new 0 0 90 90;" xml:space="preserve">
                         <path d="M90,43.841c0,24.213-19.779,43.841-44.182,43.841c-7.747,0-15.025-1.98-21.357-5.455L0,90l7.975-23.522
                           c-4.023-6.606-6.34-14.354-6.34-22.637C1.635,19.628,21.416,0,45.818,0C70.223,0,90,19.628,90,43.841z M45.818,6.982
@@ -637,15 +637,6 @@
 </div>
 
 
-
-
-<aside hidden>
-    <div class="grid-x align-center-middle cart">
-      <div class="cell small-6 align-self-middle">Total:</div>
-      <div class="cell small-6 align-self-middle text-right">$500</div>
-  </div>
-</aside>
-
     <script src="js/jquery.min.js"></script>
     <script src="js/what-input.min.js"></script>
     <script src="js/foundation.min.js"></script>
@@ -653,31 +644,47 @@
 
     <script>
 
-        // GO TO NEXT CARD
-        $('.next').on('click', function(){
-            var ele = $(this).parent('.card').next('.card');
-            $("html, body").animate({
-                scrollTop: $(ele).offset().top
-            }, 200);
-            return false;
-        });
 
+
+        // // GO TO NEXT CARD
+        // $('.next').on('click', function(){
+        //     var ele = $(this).parent('.card').next('.card');
+        //     $("html, body").animate({
+        //         scrollTop: $(ele).offset().top
+        //     }, 200);
+        //     return false;
+        // });
+
+        var cartTotal = 0;
 
         // ADD WHATSAPP MESSAGE
-        // function updateWhatsApp() {
-            // TODO -- update url everytime cart is changed
-            // var URL = "https://wa.me/19712706613?text=" + _ITEM_ + "-----%0aTotal:%20$" + _TOTAL_;            
-        // };        
+        function updateWhatsApp() {
+            var tableText = "Please%20contact%20me%20about%20these%20products!";
+            $('.cart.checkout tbody tr').each(function(){
+                tableText += "%0a-----%0a";
+                $(this).children('td').each(function(){
+                    tableText += $(this).text() + "%20%20|%20%20";
+                });
+            });
+            // var WhatsAppPhone = "19712706613";
+            var WhatsAppPhone = "19546954629";
+            var URL = "https://wa.me/"+WhatsAppPhone+"?text=" + tableText + "%0a-----%0aTotal:%20$" + cartTotal;
+            $('.SendToWhatsApp').attr('href',URL);
+        };
 
 
-        // GET TOTAL VALUE OF ALL ITEMS IN CART, DISPLAY ON SCREEN
+        // GET TOTAL VALUE OF ALL ITEMS IN CART, DISPLAY ON SCREEN        
         function calcCartTotal() {
-            var cartTotal = 0;
+            cartTotal = 0;
             $('.checkout tbody .product-total').each(function(){
                 cartTotal += parseInt( $(this).attr('data-total') );
             });
             $('.fixed .product-total span').text(cartTotal);
+            updateWhatsApp();
         };
+
+
+        // PRODUCT QUANTITY ICON INTERACTION
         $('[data-plus]').on('click',function(){
             var currentQuantity = $(this).parents('.quantity-wrapper').find('input.quantity').val();
             currentQuantity++;
@@ -690,6 +697,8 @@
                 $(this).parents('.quantity-wrapper').find('input.quantity').val(currentQuantity).trigger('change');
             }            
         });
+
+
         // ADD ITEM TO CART
         $('.quantity').on('change', function(){
             // used to check if item is added or removed
@@ -743,17 +752,14 @@
                     calcCartTotal();
                 }                
             } else if (itemQuantity == 0){
-                // if user removed items enough to reach 0
-                $('.checkout:not(.fixed)').removeClass('has-products');
-                // console.log("removed from cart");
                 $('.checkout:not(.fixed) tbody tr[data-id='+productID+']').remove();
                 calcCartTotal();
+                if ( $('.checkout:not(.fixed) tbody tr').length == 0 ){
+                    // if user removed all items
+                    $('.checkout:not(.fixed)').removeClass('has-products');
+                }
             };
-
         });
-
-
-
     </script>
   </body>
 </html>
